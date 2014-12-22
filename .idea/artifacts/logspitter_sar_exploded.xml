@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="logspitter:sar exploded">
+    <output-path>$PROJECT_DIR$/target/logspitter-1.0</output-path>
+    <root id="root">
+      <element id="library" level="project" name="Maven: org.javassist:javassist:3.18.1-GA" />
+      <element id="module-output" name="logspitter" />
+    </root>
+  </artifact>
+</component>

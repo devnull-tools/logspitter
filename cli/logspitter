@@ -1,0 +1,57 @@
+#!/bin/sh
+
+CATEGORY=""
+LEVEL="info"
+EXCEPTION=""
+MESSAGE=""
+SERVER=127.0.0.1
+PORT=8080
+
+for arg in "${@}"; do
+  case $arg in
+    --category )
+    CATEGORY="$2"
+    shift;shift
+    ;;
+    --level )
+    LEVEL="$2"
+    shift;shift
+    ;;
+    --exception )
+    EXCEPTION="$2"
+    shift;shift
+    ;;
+    --message )
+    MESSAGE="$2"
+    shift;shift
+    ;;
+    --server )
+    SERVER="$2"
+    shift;shift
+    ;;
+    --port )
+    PORT="$2"
+    shift;shift
+    ;;
+  esac
+done
+
+ENDPOINT="http://${SERVER}:${PORT}/logspitter/LogSpitterService?wsdl"
+
+curl --silent \
+  --data \
+  @- \
+  --header 'Content-Type: application/soap+xml; charset=utf-8' \
+  --user-agent "" \
+  ${ENDPOINT} <<EOF 1>/dev/null
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:log="http://logspitter.devnull.tools/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <log:${LEVEL}>
+         <category>${CATEGORY}</category>
+         <message>${MESSAGE}</message>
+         <exceptionClass>${EXCEPTION}</exceptionClass>
+      </log:${LEVEL}>
+   </soapenv:Body>
+</soapenv:Envelope>
+EOF

@@ -1,0 +1,5 @@
+/subsystem=logging/logging-profile=logspitter-profile:add
+/subsystem=logging/logging-profile=logspitter-profile/file-handler=trace-file:add(file={path=>"trace.log", "relative-to"=>"jboss.server.log.dir"})
+/subsystem=logging/logging-profile=logspitter-profile/file-handler=trace-file:change-log-level(level="TRACE")
+/subsystem=logging/logging-profile=logspitter-profile/logger=tools.devnull.logspitter:add(level=TRACE)
+/subsystem=logging/logging-profile=logspitter-profile/logger=tools.devnull.logspitter:assign-handler(name="trace-file")

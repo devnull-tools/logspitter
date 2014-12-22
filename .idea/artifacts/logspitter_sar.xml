@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="logspitter:sar">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="logspitter-1.0.sar">
+      <element id="artifact" artifact-name="logspitter:sar exploded" />
+    </root>
+  </artifact>
+</component>
