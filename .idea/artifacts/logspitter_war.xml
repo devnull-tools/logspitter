@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="war" name="logspitter:war">
-    <output-path>$PROJECT_DIR$/out/artifacts/logspitter_war</output-path>
+    <output-path>$PROJECT_DIR$/target</output-path>
     <root id="archive" name="logspitter.war">
       <element id="artifact" artifact-name="logspitter:war exploded" />
     </root>
