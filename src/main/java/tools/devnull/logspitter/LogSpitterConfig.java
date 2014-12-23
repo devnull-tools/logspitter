@@ -25,10 +25,27 @@
 
 package tools.devnull.logspitter;
 
+/**
+ * Interface for configuring a log entry.
+ *
+ * @author Marcelo Guimaraes
+ */
 public interface LogSpitterConfig {
 
+  /**
+   * Defines the message to log.
+   *
+   * @param message the message to log
+   * @return a component for configuring the message.
+   */
   SpitterMessageConfig message(String message);
 
+  /**
+   * Defines an exception to log. This parameter is a String because
+   * the class may not be on classpath.
+   *
+   * @param exceptionClass the exception class.
+   */
   void exception(String exceptionClass);
 
 }

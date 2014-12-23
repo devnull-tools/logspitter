@@ -25,10 +25,25 @@
 
 package tools.devnull.logspitter;
 
+/**
+ * Interface for configuring an exception in the log entry.
+ *
+ * @author Marcelo Guimaraes
+ */
 public interface SpitterExceptionConfig {
 
+  /**
+   * Defines which exception was thrown. This parameter is
+   * a String because the class may not be on classpath.
+   *
+   * @param exceptionClass the exception class.
+   */
   void thrownBy(String exceptionClass);
 
+  /**
+   * Tells that the message to log must not be associated with
+   * an exception.
+   */
   void raw();
 
 }

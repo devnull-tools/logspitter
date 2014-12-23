@@ -32,6 +32,11 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
+/**
+ * A webservice that exposes an interface for generating log entries.
+ *
+ * @author Marcelo Guimaraes
+ */
 @WebService
 public class LogSpitterService {
 
@@ -41,6 +46,14 @@ public class LogSpitterService {
     return arg == null || arg.trim().isEmpty();
   }
 
+  /**
+   * Generates a log entry based on the given informations.
+   *
+   * @param level          the level of the message
+   * @param message        the message
+   * @param category       the category of the message (optional)
+   * @param exceptionClass the exception to throw (optional)
+   */
   @Oneway
   @WebMethod
   public void spit(

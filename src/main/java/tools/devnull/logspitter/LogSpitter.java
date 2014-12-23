@@ -25,8 +25,22 @@
 
 package tools.devnull.logspitter;
 
+/**
+ * Interface that defines a component capable of generating logs.
+ *
+ * This is an DSL for creating an log entry and any void method marks
+ * its end.
+ *
+ * @author Marcelo Guimaraes
+ */
 public interface LogSpitter {
 
+  /**
+   * Starts the DSL for generating a log.
+   *
+   * @param level the log level (info, warn, error, ...)
+   * @return a component to configure the log entry
+   */
   LogSpitterConfig spit(String level);
 
 }

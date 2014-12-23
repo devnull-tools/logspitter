@@ -25,8 +25,19 @@
 
 package tools.devnull.logspitter;
 
+/**
+ * Interface for configuring a message to log.
+ *
+ * @author Marcelo Guimaraes
+ */
 public interface SpitterMessageConfig extends SpitterExceptionConfig {
 
+  /**
+   * Defines the category of the message.
+   *
+   * @param category the category of the message.
+   * @return a component for configuring the exception (if needed)
+   */
   SpitterExceptionConfig ofCategory(String category);
 
 }

@@ -25,10 +25,33 @@
 
 package tools.devnull.logspitter;
 
+/**
+ * Interface that defines a class that can create exceptions
+ * based on a given class name.
+ * <p/>
+ * This is used by LogSpitter to create classes at runtime to
+ * pass to the log engine and eliminate the need of the exception
+ * classes to be in LogSpitter classpath.
+ *
+ * @author Marcelo Guimaraes
+ */
 public interface ExceptionCreator {
 
+  /**
+   * Creates an exception of the given class and message.
+   *
+   * @param exceptionClass the exception class
+   * @param message        the message that this exception holds
+   * @return the created exception.
+   */
   Throwable create(String exceptionClass, String message);
 
+  /**
+   * Creates an exception of the given class.
+   *
+   * @param exceptionClass the exception class
+   * @return the created exception.
+   */
   Throwable create(String exceptionClass);
 
 }
