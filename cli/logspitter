@@ -19,7 +19,12 @@ usage() {
 --port        Sets the port of the server which the logspitter is running
 
 -h | --help   Prints this message"""
+  exit 0
 }
+
+if [[ $# == 0 ]]; then
+  usage
+fi
 
 for arg in "${@}"; do
   case $arg in
@@ -49,7 +54,6 @@ for arg in "${@}"; do
       ;;
     -h | --help )
       usage
-      exit 0
       ;;
   esac
 done
