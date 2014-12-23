@@ -23,54 +23,42 @@
  * SOFTWARE   OR   THE   USE   OR   OTHER   DEALINGS  IN  THE  SOFTWARE.
  */
 
-package tools.devnull.logspitter;
+package tools.devnull.logspitter.impl;
 
-import tools.devnull.logspitter.impl.LogSpitterImpl;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import tools.devnull.logspitter.ExceptionCreator;
+import tools.devnull.logspitter.LogSpitter;
+import tools.devnull.logspitter.SpitterExceptionConfig;
+import tools.devnull.logspitter.SpitterMessageConfig;
 
-import javax.jws.Oneway;
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
+public class SpitterMessageConfigImpl implements SpitterMessageConfig {
 
-@WebService
-public class LogSpitterService {
+  private final ExceptionCreator exceptionCreator;
+  private final Level level;
+  private final String message;
 
-  private final LogSpitter spitter = new LogSpitterImpl();
-
-  private final boolean empty(String arg) {
-    return arg == null || arg.trim().isEmpty();
+  public SpitterMessageConfigImpl(ExceptionCreator exceptionCreator, Level level, String message) {
+    this.exceptionCreator = exceptionCreator;
+    this.level = level;
+    this.message = message;
   }
 
-  @Oneway
-  @WebMethod
-  public void spit(
-      @WebParam(name = "level") String level,
-      @WebParam(name = "message") String message,
-      @WebParam(name = "category") String category,
-      @WebParam(name = "exceptionClass") String exceptionClass) throws Exception {
-    if (empty(exceptionClass)) {
-      if (empty(category)) {
-        spitter.spit(level)
-            .message(message)
-            .raw();
-      } else {
-        spitter.spit(level)
-            .message(message)
-            .ofCategory(category)
-            .raw();
-      }
-    } else {
-      if (empty(category)) {
-        spitter.spit(level)
-            .message(message)
-            .thrownBy(exceptionClass);
-      } else {
-        spitter.spit(level)
-            .message(message)
-            .ofCategory(category)
-            .thrownBy(exceptionClass);
-      }
-    }
+  @Override
+  public SpitterExceptionConfig ofCategory(String category) {
+    return new SpitterExceptionConfigImpl(exceptionCreator, level, message, category);
+  }
+
+  @Override
+  public void thrownBy(String exceptionClass) {
+    Logger.getLogger(LogSpitter.class.getPackage().getName())
+        .log(level, message, exceptionCreator.create(exceptionClass, message));
+  }
+
+  @Override
+  public void raw() {
+    Logger.getLogger(LogSpitter.class.getPackage().getName()).log(level, message);
+
   }
 
 }

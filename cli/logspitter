@@ -7,32 +7,50 @@ MESSAGE=""
 SERVER=127.0.0.1
 PORT=8080
 
+usage() {
+  echo """Usage: $0
+
+--message     Sets the message to log
+--category    Sets the category of the message
+--level       Sets the level of the message
+--exception   Sets the exception to print the stacktrace
+
+--server      Sets the server which the logspitter is running
+--port        Sets the port of the server which the logspitter is running
+
+-h | --help   Prints this message"""
+}
+
 for arg in "${@}"; do
   case $arg in
     --category )
-    CATEGORY="$2"
-    shift;shift
-    ;;
+      CATEGORY="$2"
+      shift;shift
+      ;;
     --level )
-    LEVEL="$2"
-    shift;shift
-    ;;
+      LEVEL="$2"
+      shift;shift
+      ;;
     --exception )
-    EXCEPTION="$2"
-    shift;shift
-    ;;
+      EXCEPTION="$2"
+      shift;shift
+      ;;
     --message )
-    MESSAGE="$2"
-    shift;shift
-    ;;
+      MESSAGE="$2"
+      shift;shift
+      ;;
     --server )
-    SERVER="$2"
-    shift;shift
-    ;;
+      SERVER="$2"
+      shift;shift
+      ;;
     --port )
-    PORT="$2"
-    shift;shift
-    ;;
+      PORT="$2"
+      shift;shift
+      ;;
+    -h | --help )
+      usage
+      exit 0
+      ;;
   esac
 done
 
@@ -44,14 +62,15 @@ curl --silent \
   --header 'Content-Type: application/soap+xml; charset=utf-8' \
   --user-agent "" \
   ${ENDPOINT} <<EOF 1>/dev/null
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:log="http://logspitter.devnull.tools/">
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spitter="http://logspitter.devnull.tools/">
    <soapenv:Header/>
    <soapenv:Body>
-      <log:${LEVEL}>
+      <spitter:spit>
+         <level>${LEVEL}</level>
          <category>${CATEGORY}</category>
          <message>${MESSAGE}</message>
          <exceptionClass>${EXCEPTION}</exceptionClass>
-      </log:${LEVEL}>
+      </spitter:spit>
    </soapenv:Body>
 </soapenv:Envelope>
 EOF

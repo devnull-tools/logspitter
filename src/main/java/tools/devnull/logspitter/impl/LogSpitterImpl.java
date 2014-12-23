@@ -1,3 +1,4 @@
+
 /*
  * The MIT License
  *
@@ -22,11 +23,19 @@
  * TORT  OR  OTHERWISE,  ARISING  FROM,  OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE   OR   THE   USE   OR   OTHER   DEALINGS  IN  THE  SOFTWARE.
  */
+package tools.devnull.logspitter.impl;
 
-package tools.devnull.logspitter;
+import org.apache.log4j.Level;
+import tools.devnull.logspitter.LogSpitter;
+import tools.devnull.logspitter.LogSpitterConfig;
+import tools.devnull.logspitter.impl.ExceptionCreatorImpl;
+import tools.devnull.logspitter.impl.LogSpitterConfigImpl;
 
-public interface LogSpitter {
+public class LogSpitterImpl implements LogSpitter {
 
-  LogSpitterConfig spit(String level);
+  @Override
+  public LogSpitterConfig spit(String level) {
+    return new LogSpitterConfigImpl(new ExceptionCreatorImpl(), Level.toLevel(level, Level.INFO));
+  }
 
 }

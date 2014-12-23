@@ -25,52 +25,10 @@
 
 package tools.devnull.logspitter;
 
-import tools.devnull.logspitter.impl.LogSpitterImpl;
+public interface SpitterExceptionConfig {
 
-import javax.jws.Oneway;
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
+  void thrownBy(String exceptionClass);
 
-@WebService
-public class LogSpitterService {
-
-  private final LogSpitter spitter = new LogSpitterImpl();
-
-  private final boolean empty(String arg) {
-    return arg == null || arg.trim().isEmpty();
-  }
-
-  @Oneway
-  @WebMethod
-  public void spit(
-      @WebParam(name = "level") String level,
-      @WebParam(name = "message") String message,
-      @WebParam(name = "category") String category,
-      @WebParam(name = "exceptionClass") String exceptionClass) throws Exception {
-    if (empty(exceptionClass)) {
-      if (empty(category)) {
-        spitter.spit(level)
-            .message(message)
-            .raw();
-      } else {
-        spitter.spit(level)
-            .message(message)
-            .ofCategory(category)
-            .raw();
-      }
-    } else {
-      if (empty(category)) {
-        spitter.spit(level)
-            .message(message)
-            .thrownBy(exceptionClass);
-      } else {
-        spitter.spit(level)
-            .message(message)
-            .ofCategory(category)
-            .thrownBy(exceptionClass);
-      }
-    }
-  }
+  void raw();
 
 }
