@@ -27,7 +27,7 @@ if [[ $# == 0 ]]; then
 fi
 
 for arg in "${@}"; do
-  case '${arg}' in
+  case ${arg} in
     --category )
       CATEGORY="$2"
       shift;shift
