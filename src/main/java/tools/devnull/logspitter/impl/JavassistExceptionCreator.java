@@ -32,7 +32,12 @@ import tools.devnull.logspitter.ExceptionCreator;
 
 import java.lang.reflect.Constructor;
 
-public class ExceptionCreatorImpl implements ExceptionCreator {
+/**
+ * A class that creates exceptions using Javassist if the class is not on the classpath.
+ *
+ * @author Marcelo Guimaraes
+ */
+public class JavassistExceptionCreator implements ExceptionCreator {
 
   @Override
   public Throwable create(String exceptionClass) {

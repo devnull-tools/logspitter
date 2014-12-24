@@ -25,7 +25,7 @@
 
 package tools.devnull.logspitter;
 
-import tools.devnull.logspitter.impl.ExceptionCreatorImpl;
+import tools.devnull.logspitter.impl.JavassistExceptionCreator;
 import tools.devnull.logspitter.impl.Log4JLogForwarder;
 import tools.devnull.logspitter.impl.LogSpitterImpl;
 
@@ -43,7 +43,7 @@ import javax.jws.WebService;
 public class LogSpitterService {
 
   private final LogSpitter spitter = new LogSpitterImpl(
-      new Log4JLogForwarder(), new ExceptionCreatorImpl()
+      new Log4JLogForwarder(), new JavassistExceptionCreator()
   );
 
   private final boolean empty(String arg) {
