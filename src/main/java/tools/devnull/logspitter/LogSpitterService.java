@@ -46,7 +46,7 @@ public class LogSpitterService {
       new Log4JLogForwarder(), new JavassistExceptionCreator()
   );
 
-  private final boolean empty(String arg) {
+  private boolean empty(String arg) {
     return arg == null || arg.trim().isEmpty();
   }
 
@@ -64,7 +64,7 @@ public class LogSpitterService {
       @WebParam(name = "level") String level,
       @WebParam(name = "message") String message,
       @WebParam(name = "category") String category,
-      @WebParam(name = "exceptionClass") String exceptionClass) throws Exception {
+      @WebParam(name = "exceptionClass") String exceptionClass) {
     if (empty(exceptionClass)) {
       if (empty(category)) {
         spitter.spit(level)
