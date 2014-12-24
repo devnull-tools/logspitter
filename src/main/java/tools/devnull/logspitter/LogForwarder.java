@@ -23,37 +23,32 @@
  * SOFTWARE   OR   THE   USE   OR   OTHER   DEALINGS  IN  THE  SOFTWARE.
  */
 
-package tools.devnull.logspitter.impl;
+package tools.devnull.logspitter;
 
-import tools.devnull.logspitter.ExceptionCreator;
-import tools.devnull.logspitter.LogForwarder;
-import tools.devnull.logspitter.SpitterExceptionConfig;
+/**
+ * Interface that defines a class capable of forward log entries to a log engine.
+ *
+ * @author Marcelo Guimaraes
+ */
+public interface LogForwarder {
 
-public class SpitterExceptionConfigImpl implements SpitterExceptionConfig {
+  /**
+   * Forward the entry.
+   *
+   * @param level     the log level
+   * @param category  the log category
+   * @param message   the log message
+   * @param exception the exception thrown
+   */
+  void forward(String level, String category, String message, Throwable exception);
 
-  private final LogForwarder logForwarder;
-  private final ExceptionCreator exceptionCreator;
-  private final String level;
-  private final String message;
-  private final String category;
-
-  public SpitterExceptionConfigImpl(LogForwarder logForwarder, ExceptionCreator exceptionCreator,
-                                    String level, String message, String category) {
-    this.logForwarder = logForwarder;
-    this.exceptionCreator = exceptionCreator;
-    this.level = level;
-    this.message = message;
-    this.category = category;
-  }
-
-  @Override
-  public void thrownBy(String exceptionClass) {
-    logForwarder.forward(level, category, message, exceptionCreator.create(exceptionClass, message));
-  }
-
-  @Override
-  public void raw() {
-    logForwarder.forward(level, category, message);
-  }
+  /**
+   * Forward the entry.
+   *
+   * @param level     the log level
+   * @param category  the log category
+   * @param message   the log message
+   */
+  void forward(String level, String category, String message);
 
 }

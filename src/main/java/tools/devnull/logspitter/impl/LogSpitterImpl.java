@@ -25,17 +25,24 @@
  */
 package tools.devnull.logspitter.impl;
 
-import org.apache.log4j.Level;
+import tools.devnull.logspitter.ExceptionCreator;
+import tools.devnull.logspitter.LogForwarder;
 import tools.devnull.logspitter.LogSpitter;
 import tools.devnull.logspitter.LogSpitterConfig;
-import tools.devnull.logspitter.impl.ExceptionCreatorImpl;
-import tools.devnull.logspitter.impl.LogSpitterConfigImpl;
 
 public class LogSpitterImpl implements LogSpitter {
 
+  private final LogForwarder logForwarder;
+  private final ExceptionCreator exceptionCreator;
+
+  public LogSpitterImpl(LogForwarder logForwarder, ExceptionCreator exceptionCreator) {
+    this.logForwarder = logForwarder;
+    this.exceptionCreator = exceptionCreator;
+  }
+
   @Override
   public LogSpitterConfig spit(String level) {
-    return new LogSpitterConfigImpl(new ExceptionCreatorImpl(), Level.toLevel(level, Level.INFO));
+    return new LogSpitterConfigImpl(logForwarder, exceptionCreator, level);
   }
 
 }

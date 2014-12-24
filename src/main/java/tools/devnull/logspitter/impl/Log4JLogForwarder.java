@@ -25,41 +25,25 @@
 
 package tools.devnull.logspitter.impl;
 
-import tools.devnull.logspitter.ExceptionCreator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import tools.devnull.logspitter.LogForwarder;
-import tools.devnull.logspitter.LogSpitter;
-import tools.devnull.logspitter.SpitterExceptionConfig;
-import tools.devnull.logspitter.SpitterMessageConfig;
 
-public class SpitterMessageConfigImpl implements SpitterMessageConfig {
+/**
+ * A class that forwards log entries using Apache Log4J.
+ *
+ * @author Marcelo Guimaraes
+ */
+public class Log4JLogForwarder implements LogForwarder {
 
-  private final ExceptionCreator exceptionCreator;
-  private final LogForwarder logForwarder;
-  private final String level;
-  private final String message;
-
-  public SpitterMessageConfigImpl(LogForwarder logForwarder, ExceptionCreator exceptionCreator,
-                                  String level, String message) {
-    this.logForwarder = logForwarder;
-    this.exceptionCreator = exceptionCreator;
-    this.level = level;
-    this.message = message;
+  @Override
+  public void forward(String level, String category, String message, Throwable exception) {
+    Logger.getLogger(category).log(Level.toLevel(level, Level.INFO), message, exception);
   }
 
   @Override
-  public SpitterExceptionConfig ofCategory(String category) {
-    return new SpitterExceptionConfigImpl(logForwarder, exceptionCreator, level, message, category);
-  }
-
-  @Override
-  public void thrownBy(String exceptionClass) {
-    logForwarder.forward(level, LogSpitter.class.getPackage().getName(), message,
-        exceptionCreator.create(exceptionClass, message));
-  }
-
-  @Override
-  public void raw() {
-    logForwarder.forward(level, LogSpitter.class.getPackage().getName(), message);
+  public void forward(String level, String category, String message) {
+    Logger.getLogger(category).log(Level.toLevel(level, Level.INFO), message);
   }
 
 }
