@@ -50,23 +50,33 @@
 
   </dependencies>
 
+  <profiles>
+    <profile>
+      <id>logging-profile</id>
+      <properties>
+          <logging-profile>logspitter</logging-profile>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.4</version>
+            <configuration>
+              <archive>
+                <manifestEntries>
+                  <Logging-Profile>${logging-profile}</Logging-Profile>
+                </manifestEntries>
+              </archive>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
   <build>
     <finalName>${project.artifactId}</finalName>
-
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Logging-Profile>logspitter</Logging-Profile>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
-    </plugins>
   </build>
 
 </project>
