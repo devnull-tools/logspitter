@@ -1,7 +1,7 @@
 LogSpitter
 ==========
 
-LogSpitter is a simple tool that generates log messages. It can be useful for testing log configurations on an Application Server (currently, this project aims only JBoss EAP 6 / AS 7).
+LogSpitter is a simple tool that generates log messages. It can be useful for testing log configurations on an Application Server (currently, this project aims only JBoss EAP 6 / AS 7), log management tools or log monitors.
 
 ## How to use
 
