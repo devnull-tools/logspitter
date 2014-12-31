@@ -26,14 +26,14 @@
 package tools.devnull.logspitter;
 
 import org.junit.Test;
-import org.kodo.TestScenario;
-import org.kodo.function.BaseFunction;
-import org.kodo.function.BasePredicate;
-import org.kodo.function.Function;
-import org.kodo.function.Predicate;
+import tools.devnull.kodo.TestScenario;
+import tools.devnull.kodo.function.BaseFunction;
+import tools.devnull.kodo.function.BasePredicate;
+import tools.devnull.kodo.function.Function;
+import tools.devnull.kodo.function.Predicate;
 import tools.devnull.logspitter.impl.JavassistExceptionCreator;
 
-import static org.kodo.Spec.*;
+import static tools.devnull.kodo.Spec.*;
 
 /**
  * A class that tests the basic behaviour of the {@link JavassistExceptionCreator}.
