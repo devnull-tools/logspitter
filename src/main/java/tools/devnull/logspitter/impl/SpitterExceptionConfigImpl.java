@@ -52,7 +52,7 @@ public class SpitterExceptionConfigImpl implements SpitterExceptionConfig {
   }
 
   @Override
-  public void raw() {
+  public void plain() {
     logForwarder.forward(level, category, message);
   }
 

@@ -58,7 +58,7 @@ public class SpitterMessageConfigImpl implements SpitterMessageConfig {
   }
 
   @Override
-  public void raw() {
+  public void plain() {
     logForwarder.forward(level, LogSpitter.class.getPackage().getName(), message);
   }
 

@@ -44,6 +44,6 @@ public interface SpitterExceptionConfig {
    * Tells that the message to log must not be associated with
    * an exception.
    */
-  void raw();
+  void plain();
 
 }

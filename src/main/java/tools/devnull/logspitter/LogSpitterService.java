@@ -69,12 +69,12 @@ public class LogSpitterService {
       if (empty(category)) {
         spitter.spit(level)
             .message(message)
-            .raw();
+            .plain();
       } else {
         spitter.spit(level)
             .message(message)
             .ofCategory(category)
-            .raw();
+            .plain();
       }
     } else {
       if (empty(category)) {
