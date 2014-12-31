@@ -49,7 +49,7 @@ public class LogSpitterConfigImpl implements LogSpitterConfig {
   }
 
   @Override
-  public void exception(String exceptionClass) {
+  public void thrownBy(String exceptionClass) {
     logForwarder.forward(level, LogSpitter.class.getPackage().getName(), "", exceptionCreator.create(exceptionClass));
   }
 

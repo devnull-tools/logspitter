@@ -46,6 +46,6 @@ public interface LogSpitterConfig {
    *
    * @param exceptionClass the exception class.
    */
-  void exception(String exceptionClass);
+  void thrownBy(String exceptionClass);
 
 }
