@@ -33,13 +33,18 @@ import javax.jws.Oneway;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 
 /**
  * A webservice that exposes an interface for generating log entries.
  *
  * @author Marcelo Guimaraes
  */
-@WebService
+@Path("/")
 public class LogSpitterService {
 
   private final LogSpitter spitter = new LogSpitterImpl(
@@ -58,13 +63,13 @@ public class LogSpitterService {
    * @param category       the category of the message (optional)
    * @param exceptionClass the exception to throw (optional)
    */
-  @Oneway
-  @WebMethod
-  public void spit(
-      @WebParam(name = "level") String level,
-      @WebParam(name = "message") String message,
-      @WebParam(name = "category") String category,
-      @WebParam(name = "exceptionClass") String exceptionClass) {
+  @POST
+  @Path("/log/{level}")
+  public Response spit(
+      @PathParam("level") String level,
+      @QueryParam("message") String message,
+      @QueryParam("category") String category,
+      @QueryParam("exceptionClass") String exceptionClass) {
     if (empty(exceptionClass)) {
       if (empty(category)) {
         spitter.spit(level)
@@ -88,6 +93,7 @@ public class LogSpitterService {
             .thrownBy(exceptionClass);
       }
     }
+    return Response.ok().build();
   }
 
 }

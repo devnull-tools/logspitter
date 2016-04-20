@@ -9,9 +9,15 @@ Just build the project using Maven:
 
     $ mvn package
 
-And deploy it on you server. It will expose a SOAP endpoint that allows to publish a log entry to be forwarded to the log engine. The folder `cli` contains a **bash** script that consumes this endpoint. Just execute the script to see an usage help.
+And deploy it on you server. It will expose a REST endpoint that allows to publish a log entry to be forwarded to the log engine. The endpoint is:
 
-    $ ./logspitter
+    logspitter/log/{level}
+
+The query params are:
+
+- message - the message
+- category - the category of the message (optional)
+- exceptionClass - the exception to throw (optional)
 
 ## Logging profiles
 

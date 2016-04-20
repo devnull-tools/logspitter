@@ -25,5 +25,8 @@
         <module name="logspitter" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="logspitter" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>
