@@ -9,14 +9,14 @@ Just build the project using Maven:
 
     $ mvn package
 
-And deploy it on you server. It will expose a REST endpoint that allows to publish a log entry to be forwarded to the log engine. The endpoint is:
+And deploy it on you server. It will expose some REST endpoints that allows to publish a log entry to be forwarded to the log engine. The endpoint are:
 
-    POST: logspitter/log/{level}
+    POST: logspitter/{level}
+    POST: logspitter/{level}/{category}
 
 The query params are:
 
-- message - the message
-- category - the category of the message (optional)
+- message - the message (mandatory)
 - exceptionClass - the exception to throw (optional)
 
 ## Logging profiles

@@ -56,19 +56,19 @@ public class LogSpitterService {
   }
 
   /**
-   * Generates a log entry based on the given informations.
+   * Generates a log entry based on the given information.
    *
    * @param level          the level of the message
    * @param message        the message
-   * @param category       the category of the message (optional)
+   * @param category       the category of the message
    * @param exceptionClass the exception to throw (optional)
    */
   @POST
-  @Path("/log/{level}")
+  @Path("/{level}/{category}")
   public Response spit(
       @PathParam("level") String level,
+      @PathParam("category") String category,
       @QueryParam("message") String message,
-      @QueryParam("category") String category,
       @QueryParam("exceptionClass") String exceptionClass) {
     if (empty(exceptionClass)) {
       if (empty(category)) {
@@ -92,6 +92,31 @@ public class LogSpitterService {
             .ofCategory(category)
             .thrownBy(exceptionClass);
       }
+    }
+    return Response.ok().build();
+  }
+
+  /**
+   * Generates a log entry based on the given information.
+   *
+   * @param level          the level of the message
+   * @param message        the message
+   * @param exceptionClass the exception to throw (optional)
+   */
+  @POST
+  @Path("/{level}")
+  public Response spit(
+      @PathParam("level") String level,
+      @QueryParam("message") String message,
+      @QueryParam("exceptionClass") String exceptionClass) {
+    if (empty(exceptionClass)) {
+      spitter.spit(level)
+          .message(message)
+          .plain();
+    } else {
+      spitter.spit(level)
+          .message(message)
+          .thrownBy(exceptionClass);
     }
     return Response.ok().build();
   }
