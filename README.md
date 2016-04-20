@@ -19,12 +19,6 @@ The query params are:
 - message - the message (mandatory)
 - exceptionClass - the exception to throw (optional)
 
-## Logging profiles
-
-The LogSpitter Maven Build has a profile that maps LogSpitter to a [Logging Profile][logging-profile] named **logspitter**, you can define a logging profile and test it using LogSpitter. The profile id is **logging-profile** and the `cli/logging-profile.cli` file contains a JBoss CLI script that creates this logging profile in standalone mode (for domain mode, just add the desired profile before the `/subsystem`).
-
-[logging-profile]: https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.1/html/Administration_and_Configuration_Guide/Example_Logging_Profile_Configuration.html
-
 ## How it works
 
 A log entry has four attributes:

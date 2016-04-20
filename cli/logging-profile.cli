@@ -1,4 +1,0 @@
-/subsystem=logging/logging-profile=logspitter:add
-/subsystem=logging/logging-profile=logspitter/file-handler=spit-file:add(file={path=>"spit.log", "relative-to"=>"jboss.server.log.dir"})
-/subsystem=logging/logging-profile=logspitter/root-logger=ROOT:add(handlers=["spit-file"],level="TRACE")
-/subsystem=logging/logging-profile=logspitter/file-handler=spit-file:change-log-level(level="TRACE")
