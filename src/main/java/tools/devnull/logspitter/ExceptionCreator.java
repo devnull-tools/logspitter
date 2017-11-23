@@ -28,7 +28,7 @@ package tools.devnull.logspitter;
 /**
  * Interface that defines a class that can create exceptions
  * based on a given class name.
- * <p/>
+ * <p>
  * This is used by LogSpitter to create classes at runtime to
  * pass to the log engine and eliminate the need of the exception
  * classes to be in LogSpitter classpath.
