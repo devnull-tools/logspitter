@@ -30,6 +30,8 @@ import tools.devnull.logspitter.impl.Log4JLogForwarder;
 import tools.devnull.logspitter.impl.LogSpitterImpl;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
@@ -53,16 +55,40 @@ public class LogSpitterService {
   @Path("/log")
   @Consumes("application/json")
   public Response spit(LogEntry entry) {
-    if (empty(entry.getLevel())) {
-      return Response.status(Response.Status.BAD_REQUEST).entity("Level not supplied").build();
-    }
     if (empty(entry.getMessage())) {
       return Response.status(Response.Status.BAD_REQUEST).entity("Message not supplied").build();
+    }
+    if (empty(entry.getLevel())) {
+      entry.setLevel("info");
     }
     if (empty(entry.getCategory())) {
       entry.setCategory(this.getClass().getPackage().getName());
     }
     entry.log(spitter);
+    return Response.ok().build();
+  }
+
+  @POST
+  @Path("/log")
+  @Consumes("application/x-www-form-urlencoded")
+  public Response spit(@FormParam("level") @DefaultValue("info") String level,
+                       @FormParam("category") @DefaultValue("tools.devnull.logspitter") String category,
+                       @FormParam("message") String message,
+                       String exceptionClass) {
+    if (empty(message)) {
+      return Response.status(Response.Status.BAD_REQUEST).entity("Message not supplied").build();
+    }
+    if (empty(exceptionClass)) {
+      spitter.spit(level)
+          .withMessage(message)
+          .ofCategory(category)
+          .plain();
+    } else {
+      spitter.spit(level)
+          .withMessage(message)
+          .ofCategory(category)
+          .thrownBy(exceptionClass);
+    }
     return Response.ok().build();
   }
 
