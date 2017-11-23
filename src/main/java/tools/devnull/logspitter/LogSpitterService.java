@@ -29,14 +29,9 @@ import tools.devnull.logspitter.impl.JavassistExceptionCreator;
 import tools.devnull.logspitter.impl.Log4JLogForwarder;
 import tools.devnull.logspitter.impl.LogSpitterImpl;
 
-import javax.jws.Oneway;
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 /**
@@ -47,78 +42,32 @@ import javax.ws.rs.core.Response;
 @Path("/")
 public class LogSpitterService {
 
-  private final LogSpitter spitter = new LogSpitterImpl(
-      new Log4JLogForwarder(), new JavassistExceptionCreator()
-  );
+  private final LogSpitter spitter = new LogSpitterImpl(new Log4JLogForwarder(), new JavassistExceptionCreator());
+
+  /**
+   * Generates a log entry based on the given information.
+   *
+   * @param entry the entry to log
+   */
+  @POST
+  @Path("/log")
+  @Consumes("application/json")
+  public Response spit(LogEntry entry) {
+    if (empty(entry.getLevel())) {
+      return Response.status(Response.Status.BAD_REQUEST).entity("Level not supplied").build();
+    }
+    if (empty(entry.getMessage())) {
+      return Response.status(Response.Status.BAD_REQUEST).entity("Message not supplied").build();
+    }
+    if (empty(entry.getCategory())) {
+      entry.setCategory(this.getClass().getPackage().getName());
+    }
+    entry.log(spitter);
+    return Response.ok().build();
+  }
 
   private boolean empty(String arg) {
     return arg == null || arg.trim().isEmpty();
-  }
-
-  /**
-   * Generates a log entry based on the given information.
-   *
-   * @param level          the level of the message
-   * @param message        the message
-   * @param category       the category of the message
-   * @param exceptionClass the exception to throw (optional)
-   */
-  @POST
-  @Path("/{level}/{category}")
-  public Response spit(
-      @PathParam("level") String level,
-      @PathParam("category") String category,
-      @QueryParam("message") String message,
-      @QueryParam("exceptionClass") String exceptionClass) {
-    if (empty(exceptionClass)) {
-      if (empty(category)) {
-        spitter.spit(level)
-            .message(message)
-            .plain();
-      } else {
-        spitter.spit(level)
-            .message(message)
-            .ofCategory(category)
-            .plain();
-      }
-    } else {
-      if (empty(category)) {
-        spitter.spit(level)
-            .message(message)
-            .thrownBy(exceptionClass);
-      } else {
-        spitter.spit(level)
-            .message(message)
-            .ofCategory(category)
-            .thrownBy(exceptionClass);
-      }
-    }
-    return Response.ok().build();
-  }
-
-  /**
-   * Generates a log entry based on the given information.
-   *
-   * @param level          the level of the message
-   * @param message        the message
-   * @param exceptionClass the exception to throw (optional)
-   */
-  @POST
-  @Path("/{level}")
-  public Response spit(
-      @PathParam("level") String level,
-      @QueryParam("message") String message,
-      @QueryParam("exceptionClass") String exceptionClass) {
-    if (empty(exceptionClass)) {
-      spitter.spit(level)
-          .message(message)
-          .plain();
-    } else {
-      spitter.spit(level)
-          .message(message)
-          .thrownBy(exceptionClass);
-    }
-    return Response.ok().build();
   }
 
 }

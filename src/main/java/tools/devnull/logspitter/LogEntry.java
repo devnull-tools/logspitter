@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2014 Marcelo Guimaraes <ataxexe@gmail.com>
+ * Copyright (c) 2017 Marcelo Guimaraes <ataxexe@gmail.com>
  *
  * Permission  is hereby granted, free of charge, to any person obtaining
  * a  copy  of  this  software  and  associated  documentation files (the
@@ -25,27 +25,57 @@
 
 package tools.devnull.logspitter;
 
-/**
- * Interface for configuring a log entry.
- *
- * @author Marcelo Guimaraes
- */
-public interface LogSpitterConfig {
+public class LogEntry {
 
-  /**
-   * Defines the message to log.
-   *
-   * @param message the message to log
-   * @return a component for configuring the message.
-   */
-  SpitterMessageConfig withMessage(String message);
+  private String level;
+  private String category;
+  private String message;
+  private String exceptionClass;
 
-  /**
-   * Defines an exception to log. This parameter is a String because
-   * the class may not be on classpath.
-   *
-   * @param exceptionClass the exception class.
-   */
-  void thrownBy(String exceptionClass);
+  public String getLevel() {
+    return level;
+  }
+
+  public void setLevel(String level) {
+    this.level = level;
+  }
+
+  public String getCategory() {
+    return category;
+  }
+
+  public void setCategory(String category) {
+    this.category = category;
+  }
+
+  public String getMessage() {
+    return message;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
+  }
+
+  public String getExceptionClass() {
+    return exceptionClass;
+  }
+
+  public void setExceptionClass(String exceptionClass) {
+    this.exceptionClass = exceptionClass;
+  }
+
+  public void log(LogSpitter spitter) {
+    if (exceptionClass != null && !exceptionClass.isEmpty()) {
+      spitter.spit(level)
+          .withMessage(message)
+          .ofCategory(category)
+          .thrownBy(exceptionClass);
+    } else {
+      spitter.spit(level)
+          .withMessage(message)
+          .ofCategory(category)
+          .plain();
+    }
+  }
 
 }

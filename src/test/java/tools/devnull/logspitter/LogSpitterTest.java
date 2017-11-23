@@ -68,7 +68,7 @@ public class LogSpitterTest {
 
   @Test
   public void testMessageWithoutCategory() {
-    logSpitter.spit(info).message(logMessage).plain();
+    logSpitter.spit(info).withMessage(logMessage).plain();
 
     verify(logForwarder, times(1)).forward(info, defaultCategory, logMessage);
   }
@@ -76,14 +76,14 @@ public class LogSpitterTest {
   @Test
   public void testMessageWithCategory() {
     String myCategory = "mycategory";
-    logSpitter.spit(info).message(logMessage).ofCategory(myCategory).plain();
+    logSpitter.spit(info).withMessage(logMessage).ofCategory(myCategory).plain();
 
     verify(logForwarder, times(1)).forward(info, myCategory, logMessage);
   }
 
   @Test
   public void testExceptionWithoutCategory() {
-    logSpitter.spit(error).message(logMessage).thrownBy(someException);
+    logSpitter.spit(error).withMessage(logMessage).thrownBy(someException);
 
     verify(logForwarder, times(1)).forward(eq(error), eq(defaultCategory), eq(logMessage), any(Throwable.class));
     verify(exceptionCreator, times(1)).create(someException, logMessage);
@@ -92,7 +92,7 @@ public class LogSpitterTest {
   @Test
   public void testExceptionWithCategory() {
     String myCategory = "mycategory";
-    logSpitter.spit(error).message(logMessage).ofCategory(myCategory).thrownBy(someException);
+    logSpitter.spit(error).withMessage(logMessage).ofCategory(myCategory).thrownBy(someException);
 
     verify(logForwarder, times(1)).forward(eq(error), eq(myCategory), eq(logMessage), any(Throwable.class));
     verify(exceptionCreator, times(1)).create(someException, logMessage);

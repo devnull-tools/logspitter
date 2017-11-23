@@ -25,8 +25,13 @@
 
 package tools.devnull.logspitter.impl;
 
+import org.apache.log4j.Appender;
+import org.apache.log4j.Layout;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.log4j.spi.ErrorHandler;
+import org.apache.log4j.spi.Filter;
+import org.apache.log4j.spi.LoggingEvent;
 import tools.devnull.logspitter.LogForwarder;
 
 /**
@@ -35,6 +40,70 @@ import tools.devnull.logspitter.LogForwarder;
  * @author Marcelo Guimaraes
  */
 public class Log4JLogForwarder implements LogForwarder {
+
+  {
+    Logger.getRootLogger().addAppender(new Appender() {
+      @Override
+      public void addFilter(Filter newFilter) {
+
+      }
+
+      @Override
+      public Filter getFilter() {
+        return null;
+      }
+
+      @Override
+      public void clearFilters() {
+
+      }
+
+      @Override
+      public void close() {
+
+      }
+
+      @Override
+      public void doAppend(LoggingEvent event) {
+
+      }
+
+      @Override
+      public String getName() {
+        return null;
+      }
+
+      @Override
+      public void setErrorHandler(ErrorHandler errorHandler) {
+
+      }
+
+      @Override
+      public ErrorHandler getErrorHandler() {
+        return null;
+      }
+
+      @Override
+      public void setLayout(Layout layout) {
+
+      }
+
+      @Override
+      public Layout getLayout() {
+        return null;
+      }
+
+      @Override
+      public void setName(String name) {
+
+      }
+
+      @Override
+      public boolean requiresLayout() {
+        return false;
+      }
+    });
+  }
 
   @Override
   public void forward(String level, String category, String message, Throwable exception) {

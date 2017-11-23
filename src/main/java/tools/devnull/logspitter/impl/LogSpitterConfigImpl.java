@@ -44,7 +44,7 @@ public class LogSpitterConfigImpl implements LogSpitterConfig {
   }
 
   @Override
-  public SpitterMessageConfig message(String message) {
+  public SpitterMessageConfig withMessage(String message) {
     return new SpitterMessageConfigImpl(logForwarder, exceptionCreator, level, message);
   }
 
