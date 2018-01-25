@@ -90,9 +90,6 @@
   <profiles>
     <profile>
       <id>logging-profile</id>
-      <properties>
-          <logging-profile>logspitter</logging-profile>
-      </properties>
       <build>
         <plugins>
           <plugin>
@@ -102,7 +99,7 @@
             <configuration>
               <archive>
                 <manifestEntries>
-                  <Logging-Profile>${logging-profile}</Logging-Profile>
+                  <Logging-Profile>${build.finalName}</Logging-Profile>
                 </manifestEntries>
               </archive>
             </configuration>
